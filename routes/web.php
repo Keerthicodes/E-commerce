@@ -18,6 +18,7 @@ Route::middleware(['auth', 'seller'])->group(function () {
     Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
     Route::delete('/products/{id}', [ProductController::class, 'destory']);
     Route::get('/category-test', [ProductController::class, 'categoryTest']);
+    Route::get('/seller/products', [ProductController::class, 'sellerProducts']);
 
     //categories 
     Route::get('/categories', [CategoryContorller::class, 'index']);

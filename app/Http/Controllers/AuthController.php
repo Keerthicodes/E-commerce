@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -45,7 +46,12 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/products');
+            /** @disregard P1013 Undefined method */
+            if (auth()->user()->role === 'customer') {
+                return redirect('/products');
+            } elseif (auth()->user()->role === 'seller') {
+                return redirect('/seller/products');
+            }
         }
 
         return back()->withErrors([

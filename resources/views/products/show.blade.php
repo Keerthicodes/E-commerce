@@ -82,6 +82,7 @@
                         <strong>Category:</strong>
                         {{ $product->category?->name ?? 'Uncategorized' }}
                     </p>
+                    
             
                     @if(auth()->user()->role === 'seller')
                         <a href="/products/{{ $product->id }}/edit">
@@ -120,7 +121,11 @@
             
             </div>
             
+            @if(auth()->user()->role === 'customer')
             <a href="/products">← Back to Products</a>
+            @elseif(auth()->user()->role === 'seller')
+            <a href="/seller/products"><button>← Back to Products</button></a>
+            @endif
             </div>
         @endsection
     </body>

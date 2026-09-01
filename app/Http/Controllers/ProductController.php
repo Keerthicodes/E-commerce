@@ -33,6 +33,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
         }
+        /** @disregard P1013 Undefined method */
         Product::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -40,8 +41,9 @@ class ProductController extends Controller
             'stock' => $request->input('stock'),
             'category_id' => $request->input('category_id'),
             'image' => $imagePath,
+            'seller_id' => auth()->id(),
         ]);
-        return redirect('/products');
+        return redirect('/seller/products');
     }
     public function show($id)
     {
@@ -50,14 +52,16 @@ class ProductController extends Controller
     }
     public function edit($id)
     {
-        $product = Product::find($id);
+        /** @disregard P1013 Undefined method */
+        $product = Product::where('seller_id', auth()->id())->findOrFail($id);
         $categories = Category::all();
 
         return view('products.edit', compact('product', 'categories'));
     }
     public function update(Request $request, $id)
     {
-        $products = Product::findOrFail($id);
+        /** @disregard P1013 Undefined method */
+        $products = Product::where('seller_id', auth()->id())->findOrFail($id);
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
         }
@@ -74,7 +78,8 @@ class ProductController extends Controller
     }
     public function destory($id)
     {
-        $product = Product::find($id);
+        /** @disregard P1013 Undefined method */
+        $product = Product::where('seller_id', auth()->id())->findOrFail($id);
 
         $product->delete();
         return "Deleted successfully";
@@ -85,5 +90,13 @@ class ProductController extends Controller
         $product = Product::with('category')->findOrFail(2);
 
         return $product;
+    }
+
+    public function sellerProducts()
+    {
+        /** @disregard P1013 Undefined method */
+        $products = Product::where('seller_id', auth()->id())->get();
+
+        return view('products.seller-index', compact('products'));
     }
 }

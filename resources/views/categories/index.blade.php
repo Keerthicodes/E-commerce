@@ -8,7 +8,7 @@
 
         <h1>Categories</h1>
 
-        <a href="/categories/create">Add Category</a>
+        <a href="/categories/create"><button>Add Category</button></a>
 
         @foreach ($categories as $category)
 
@@ -17,6 +17,6 @@
             </p>
 
         @endforeach
-
+            <a href="/seller/products"><button>back</button></a>
         @endsection
     </body>
