@@ -130,7 +130,7 @@
 
     <div>
 
-        @auth
+        {{-- @auth
     
             <a href="/products">Products</a>
             @if(auth()->user()->role !== 'seller')
@@ -148,7 +148,26 @@
             <a href="/register">Register</a>
     
         @endauth
-    
+         --}}
+         @auth
+
+         @if(auth()->user()->role === 'seller')
+             <a href="/seller/products">My Products</a>
+         @endif
+        
+         @if(auth()->user()->role === "customer")
+         <a href="/products">Products</a>
+         <a href="/cart">Cart</a>
+         <a href="/orders">My Orders</a>
+         @endif
+     
+         <form method="POST" action="/logout" style="display:inline;">
+             @csrf
+             <button type="submit">Logout</button>
+         </form>
+     
+     @endauth
+
     </div>
 
 </nav>

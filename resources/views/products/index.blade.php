@@ -49,7 +49,7 @@
                     <button>View Product</button>
                 </a>
                 <br><br>
-                @if(auth()->user()->role !== 'seller')
+               <!-- @if(auth()->user()->role !== 'seller')  -->
                     <form method="POST"
                         action="/cart/add/{{ $product->id }}"
                         style="display:inline;">
@@ -59,7 +59,7 @@
                         <button type="submit">Add to Cart</button>
 
                     </form>
-                @endif
+               <!--  @endif -->
             </div>
 
         @endforeach
